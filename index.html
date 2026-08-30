@@ -553,8 +553,9 @@ function drawFig1(fA,fB){
     s += '<line x1="110" y1="'+yA.toFixed(1)+'" x2="405" y2="'+yA.toFixed(1)+'" stroke="#141B17" stroke-width="1" stroke-dasharray="3 3" opacity=".45"/>';
     s += '<line x1="350" y1="'+yB.toFixed(1)+'" x2="405" y2="'+yB.toFixed(1)+'" stroke="#141B17" stroke-width="1" stroke-dasharray="3 3" opacity=".45"/>';
     s += '<line x1="398" y1="'+yA.toFixed(1)+'" x2="398" y2="'+yB.toFixed(1)+'" stroke="#0B9A6D" stroke-width="1.6"/>';
-    const mid = (yA+yB)/2;
-    s += label(392, mid+4, 'ΔG° = '+(m1.dG>0?'+':'')+m1.dG.toFixed(2), {anchor:'end', size:12.5, fill:'#0B9A6D', weight:500});
+    const mid = (yA+yB)/2, dgLabelY = mid+4;
+    const dgOnLiquid = dgLabelY >= lvlB && dgLabelY <= yB;
+    s += label(392, dgLabelY, 'ΔG° = '+(m1.dG>0?'+':'')+m1.dG.toFixed(2), {anchor:'end', size:12.5, fill:(dgOnLiquid?'#FFFFFF':'#141B17'), weight:500});
   }
 
   s += label(110, H-22, 'A', {size:16, weight:600, fill:'#18453B'});
@@ -672,7 +673,7 @@ function drawFig2(){
   s += '<line x1="105" y1="'+y0.toFixed(1)+'" x2="250" y2="'+y0.toFixed(1)+'" stroke="#141B17" stroke-width="1" stroke-dasharray="3 3" opacity=".45"/>';
   s += '<line x1="235" y1="'+yT.toFixed(1)+'" x2="250" y2="'+yT.toFixed(1)+'" stroke="#141B17" stroke-width="1" stroke-dasharray="3 3" opacity=".45"/>';
   s += '<line x1="246" y1="'+y0.toFixed(1)+'" x2="246" y2="'+yT.toFixed(1)+'" stroke="#0B9A6D" stroke-width="1.8"/>';
-  s += daggerLabel(256, (y0+yT)/2+4, 'ΔG', null, ' = '+m2.dG.toFixed(2), {anchor:'start', size:12.5, fill:'#0B9A6D', weight:500});
+  s += daggerLabel(256, (y0+yT)/2+4, 'ΔG', null, ' = '+m2.dG.toFixed(2), {anchor:'start', size:12.5, fill:'#141B17', weight:500});
   s += daggerLabel(235, yT-6, '', null, null, {size:14, weight:500, fill:'#141B17'});
   s += label(105, y0+20, 'A', {size:16, weight:600, fill:'#18453B'});
   s += label(378, yOf(drop)+20, 'B', {size:16, weight:600, fill:'#004583'});
@@ -743,7 +744,7 @@ function drawFig3(f1,f2){
     s += '<line x1="150" y1="'+yT1.toFixed(1)+'" x2="310" y2="'+yT1.toFixed(1)+'" stroke="#141B17" stroke-width="1" stroke-dasharray="3 3" opacity=".4"/>';
     s += '<line x1="150" y1="'+yT2.toFixed(1)+'" x2="310" y2="'+yT2.toFixed(1)+'" stroke="#141B17" stroke-width="1" stroke-dasharray="3 3" opacity=".4"/>';
     s += '<line x1="230" y1="'+lo.toFixed(1)+'" x2="230" y2="'+hi.toFixed(1)+'" stroke="#0B9A6D" stroke-width="1.8"/>';
-    s += daggerLabel(238, (lo+hi)/2+4, 'ΔΔG', null, ' = '+Math.abs(m3.ddG).toFixed(2), {anchor:'start', size:12.5, fill:'#0B9A6D', weight:500});
+    s += daggerLabel(238, (lo+hi)/2+4, 'ΔΔG', null, ' = '+Math.abs(m3.ddG).toFixed(2), {anchor:'start', size:12.5, fill:'#141B17', weight:500});
   }
   s += daggerLabel(150, yT1-9, '', '1', null, {size:15, weight:500});
   s += daggerLabel(310, yT2-9, '', '2', null, {size:15, weight:500});
