@@ -7,7 +7,7 @@
 <meta name="description" content="Three linked calculators: conformer populations at equilibrium, rate and half-life from a barrier, and product selectivity from competing barriers.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500&display=swap" rel="stylesheet">
 <style>
   :root{
     --paper:#E7EBE4;
@@ -15,17 +15,17 @@
     --ink:#141B17;
     --muted:#6E756B;
     --rule:#D2D8C9;
-    --teal:#1B5F5A;
-    --plum:#7B2E5E;
-    --ochre:#A9761C;
-    --grid:rgba(27,95,90,.09);
+    --spartan:#18453B;
+    --msublue:#004583;
+    --excel:#0B9A6D;
+    --grid:rgba(24,69,59,.09);
   }
   *{box-sizing:border-box}
   html,body{margin:0;padding:0}
   body{
     background:var(--paper);
     color:var(--ink);
-    font-family:"IBM Plex Sans",system-ui,-apple-system,sans-serif;
+    font-family:"Montserrat",system-ui,-apple-system,sans-serif;
     font-size:16px;line-height:1.5;
     -webkit-text-size-adjust:100%;
   }
@@ -34,14 +34,14 @@
   /* ---------- header ---------- */
   header.masthead{border-bottom:2px solid var(--ink);padding-bottom:14px;margin-bottom:0}
   .eyebrow{
-    font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.16em;
+    font-family:"Montserrat",sans-serif;font-size:11px;letter-spacing:.16em;
     text-transform:uppercase;color:var(--muted);margin:0 0 6px
   }
   h1{
-    font-family:"Bricolage Grotesque","IBM Plex Sans",sans-serif;font-weight:800;
+    font-family:"Montserrat",sans-serif;font-weight:800;
     font-size:clamp(30px,7vw,50px);line-height:.98;letter-spacing:-.025em;margin:0;
   }
-  h1 .arrow{color:var(--teal)}
+  h1 .arrow{color:var(--spartan)}
   .lede{margin:10px 0 0;max-width:56ch;color:var(--muted);font-size:15px}
 
   /* ---------- tabs ---------- */
@@ -49,29 +49,37 @@
   nav.tabs::-webkit-scrollbar{display:none}
   .tab{
     appearance:none;background:none;border:0;border-bottom:3px solid transparent;
-    font-family:"Bricolage Grotesque","IBM Plex Sans",sans-serif;font-weight:600;
+    font-family:"Montserrat",sans-serif;font-weight:600;
     font-size:15px;color:var(--muted);padding:14px 16px 11px;cursor:pointer;
     white-space:nowrap;letter-spacing:-.01em;
   }
   .tab:hover{color:var(--ink)}
-  .tab[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--teal);font-weight:800}
-  .tab:focus-visible{outline:2px solid var(--teal);outline-offset:-4px;border-radius:3px}
+  .tab[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--spartan);font-weight:800}
+  .tab:focus-visible{outline:2px solid var(--spartan);outline-offset:-4px;border-radius:3px}
 
   /* ---------- panels ---------- */
   .panel[hidden]{display:none}
   .panel-head{margin:0 0 18px}
   .panel-head h2{
-    font-family:"Bricolage Grotesque","IBM Plex Sans",sans-serif;font-weight:600;
+    font-family:"Montserrat",sans-serif;font-weight:600;
     font-size:clamp(19px,4.4vw,24px);letter-spacing:-.02em;margin:0 0 6px
   }
   .panel-head p{margin:0;color:var(--muted);font-size:14.5px;max-width:62ch}
 
   .plate{
     display:inline-block;margin:12px 0 0;padding:9px 14px;background:var(--card);
-    border:1px solid var(--rule);border-left:3px solid var(--teal);
-    font-family:"IBM Plex Mono",monospace;font-size:14px;letter-spacing:.01em;
+    border:1px solid var(--rule);border-left:3px solid var(--spartan);
+    font-family:"Montserrat",sans-serif;font-size:14px;letter-spacing:.01em;
   }
-  .plate .sub{color:var(--muted)}
+  .plate .sub{color:var(--muted);margin-left:28px}
+  .frac{
+    display:inline-flex;flex-direction:column;vertical-align:middle;
+    text-align:center;line-height:1.2;margin:0 .18em;font-size:.88em;
+    position:relative;top:.05em;
+  }
+  .frac .num{padding:0 .12em 2px;border-bottom:1.3px solid currentColor}
+  .frac .den{padding:2px .12em 0}
+  .frac.small{font-size:.82em;margin:0 .12em}
 
   .cols{display:grid;grid-template-columns:1fr;gap:18px}
   @media(min-width:860px){.cols{grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:26px;align-items:start}}
@@ -85,7 +93,7 @@
   }
   .card.figure svg{display:block;width:100%;height:auto}
   .figcap{
-    font-family:"IBM Plex Mono",monospace;font-size:11.5px;color:var(--muted);
+    font-family:"Montserrat",sans-serif;font-size:11.5px;color:var(--muted);
     padding:6px 6px 2px;line-height:1.45
   }
 
@@ -93,7 +101,7 @@
   .group{margin:0 0 4px}
   .group + .group{border-top:1px solid var(--rule);margin-top:14px;padding-top:14px}
   .group-label{
-    font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.15em;
+    font-family:"Montserrat",sans-serif;font-size:10.5px;letter-spacing:.15em;
     text-transform:uppercase;color:var(--muted);margin:0 0 10px;display:flex;
     justify-content:space-between;align-items:center;gap:10px
   }
@@ -103,46 +111,46 @@
     display:block;font-size:12.5px;color:var(--muted);margin:0 0 4px;
   }
   .inputline{display:flex;align-items:stretch;border:1px solid var(--rule);background:#fff}
-  .inputline:focus-within{border-color:var(--teal);box-shadow:0 0 0 2px rgba(27,95,90,.16)}
+  .inputline:focus-within{border-color:var(--spartan);box-shadow:0 0 0 2px rgba(24,69,59,.16)}
   .inputline input{
     flex:1 1 auto;min-width:0;border:0;background:transparent;padding:9px 10px;
-    font-family:"IBM Plex Mono",monospace;font-size:16px;color:var(--ink);
+    font-family:"Montserrat",sans-serif;font-size:16px;color:var(--ink);
   }
   .inputline input:focus{outline:none}
   .inputline .unit{
     display:flex;align-items:center;padding:0 10px;background:#F1F3ED;border-left:1px solid var(--rule);
-    font-family:"IBM Plex Mono",monospace;font-size:12.5px;color:var(--muted);white-space:nowrap
+    font-family:"Montserrat",sans-serif;font-size:12.5px;color:var(--muted);white-space:nowrap
   }
   .inputline select{
     border:0;border-left:1px solid var(--rule);background:#F1F3ED;padding:0 6px;
-    font-family:"IBM Plex Mono",monospace;font-size:13px;color:var(--ink)
+    font-family:"Montserrat",sans-serif;font-size:13px;color:var(--ink)
   }
   .field.solved .inputline{background:#F6F8F2}
 
   .chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
   .chip{
     appearance:none;border:1px solid var(--rule);background:#fff;color:var(--ink);
-    font-family:"IBM Plex Mono",monospace;font-size:12px;padding:5px 9px;cursor:pointer;
+    font-family:"Montserrat",sans-serif;font-size:12px;padding:5px 9px;cursor:pointer;
   }
-  .chip:hover{border-color:var(--teal);color:var(--teal)}
-  .chip:focus-visible{outline:2px solid var(--teal);outline-offset:1px}
+  .chip:hover{border-color:var(--spartan);color:var(--spartan)}
+  .chip:focus-visible{outline:2px solid var(--spartan);outline-offset:1px}
   .chip .k{color:var(--muted)}
 
   .swap{
     appearance:none;border:1px solid var(--rule);background:#fff;color:var(--ink);
-    font-family:"IBM Plex Mono",monospace;font-size:11.5px;padding:4px 8px;cursor:pointer;
+    font-family:"Montserrat",sans-serif;font-size:11.5px;padding:4px 8px;cursor:pointer;
     text-transform:none;letter-spacing:0
   }
-  .swap:hover{border-color:var(--plum);color:var(--plum)}
-  .swap:focus-visible{outline:2px solid var(--plum);outline-offset:1px}
+  .swap:hover{border-color:var(--msublue);color:var(--msublue)}
+  .swap:focus-visible{outline:2px solid var(--msublue);outline-offset:1px}
 
   .readout{
     margin-top:14px;padding-top:12px;border-top:1px solid var(--rule);
-    font-family:"IBM Plex Mono",monospace;font-size:13.5px;line-height:1.7
+    font-family:"Montserrat",sans-serif;font-size:13.5px;line-height:1.7
   }
   .readout .big{font-size:17px}
   .readout .lbl{color:var(--muted)}
-  .flag{color:var(--ochre);font-size:12.5px;margin-top:8px;display:none}
+  .flag{color:var(--excel);font-size:12.5px;margin-top:8px;display:none}
   .flag.on{display:block}
 
   footer.notes{
@@ -150,11 +158,11 @@
     color:var(--muted);font-size:13px;max-width:70ch
   }
   footer.notes h3{
-    font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.15em;
+    font-family:"Montserrat",sans-serif;font-size:10.5px;letter-spacing:.15em;
     text-transform:uppercase;margin:0 0 8px;color:var(--muted)
   }
   footer.notes p{margin:0 0 8px}
-  footer.notes code{font-family:"IBM Plex Mono",monospace;font-size:12.5px;color:var(--ink)}
+  footer.notes code{font-family:"Montserrat",sans-serif;font-size:12.5px;color:var(--ink)}
 
   @media (prefers-reduced-motion:no-preference){
     .liquid{transition:y .25s ease,height .25s ease}
@@ -174,15 +182,15 @@
 <nav class="tabs" role="tablist" aria-label="Calculators">
   <button class="tab" role="tab" id="tab-1" aria-controls="p1" aria-selected="true">Populations</button>
   <button class="tab" role="tab" id="tab-2" aria-controls="p2" aria-selected="false">Rate &amp; half-life</button>
-  <button class="tab" role="tab" id="tab-3" aria-controls="p3" aria-selected="false">Selectivity</button>
+  <button class="tab" role="tab" id="tab-3" aria-controls="p3" aria-selected="false">Kinetic selectivity</button>
 </nav>
 
 <!-- ===================== PANEL 1 ===================== -->
 <section class="panel" id="p1" role="tabpanel" aria-labelledby="tab-1">
   <div class="panel-head">
-    <h2>Two conformers at equilibrium</h2>
+    <h2>Two isomers at equilibrium</h2>
     <p>A ⇌ B, fully equilibrated. The energy gap sets the ratio and nothing else does — the barrier between them is irrelevant here.</p>
-    <div class="plate">K = exp(−Δ<i>G</i>°/R<i>T</i>) &nbsp;<span class="sub">Δ<i>G</i>° = G<sub>B</sub> − G<sub>A</sub></span></div>
+    <div class="plate">K<sub>eq</sub> = exp(<span class="frac"><span class="num">−Δ<i>G</i>°</span><span class="den">R<i>T</i></span></span>) <span class="sub">Δ<i>G</i>° = G<sub>B</sub> − G<sub>A</sub></span></div>
   </div>
 
   <div class="cols">
@@ -195,11 +203,9 @@
       <div class="group">
         <p class="group-label"><span>Energy gap</span>
           <button class="swap" id="m1-swap" type="button">swap A ⇌ B</button></p>
-        <div class="row">
+        <div class="row one">
           <div class="field"><label for="m1-dgk">Δ<i>G</i>°</label>
             <div class="inputline"><input id="m1-dgk" inputmode="decimal" autocomplete="off"><span class="unit">kcal/mol</span></div></div>
-          <div class="field"><label for="m1-dgj">Δ<i>G</i>°</label>
-            <div class="inputline"><input id="m1-dgj" inputmode="decimal" autocomplete="off"><span class="unit">kJ/mol</span></div></div>
         </div>
       </div>
 
@@ -217,7 +223,7 @@
       <div class="group">
         <p class="group-label"><span>Distribution</span></p>
         <div class="row one">
-          <div class="field"><label for="m1-keq">K = [B]/[A]</label>
+          <div class="field"><label for="m1-keq">K<sub>eq</sub> = [B]/[A]</label>
             <div class="inputline"><input id="m1-keq" inputmode="decimal" autocomplete="off"><span class="unit">unitless</span></div></div>
         </div>
         <div class="row" style="margin-top:10px">
@@ -242,7 +248,7 @@
   <div class="panel-head">
     <h2>One irreversible step, A → B</h2>
     <p>Barrier height, temperature, rate constant, half-life: fix any two and the rest follow. Edit whichever one you actually know.</p>
-    <div class="plate">k = (κ k<sub>B</sub><i>T</i>/h) exp(−Δ<i>G</i><sup>‡</sup>/R<i>T</i>) &nbsp;<span class="sub">t<sub>½</sub> = ln2 / k · κ = 1</span></div>
+    <div class="plate">k = (κ<span class="frac"><span class="num">k<sub>B</sub><i>T</i></span><span class="den">h</span></span>) exp(<span class="frac"><span class="num">−Δ<i>G</i><sup>‡</sup></span><span class="den">R<i>T</i></span></span>) <span class="sub">t<sub>½</sub> = <span class="frac small"><span class="num">ln2</span><span class="den">k</span></span></span></div>
   </div>
 
   <div class="cols">
@@ -254,11 +260,9 @@
     <div class="card">
       <div class="group">
         <p class="group-label"><span>Barrier</span></p>
-        <div class="row">
+        <div class="row one">
           <div class="field"><label for="m2-dgk">Δ<i>G</i><sup>‡</sup></label>
             <div class="inputline"><input id="m2-dgk" inputmode="decimal" autocomplete="off"><span class="unit">kcal/mol</span></div></div>
-          <div class="field"><label for="m2-dgj">Δ<i>G</i><sup>‡</sup></label>
-            <div class="inputline"><input id="m2-dgj" inputmode="decimal" autocomplete="off"><span class="unit">kJ/mol</span></div></div>
         </div>
         <div class="chips" id="m2-bchips"></div>
       </div>
@@ -302,7 +306,7 @@
   <div class="panel-head">
     <h2>Two paths from one intermediate</h2>
     <p>A shared intermediate partitions between two transition states. Under Curtin–Hammett conditions the product ratio depends only on the gap between those two transition states — not on the intermediate, and not on how stable the products are.</p>
-    <div class="plate">P1/P2 = exp(+ΔΔ<i>G</i><sup>‡</sup>/R<i>T</i>) &nbsp;<span class="sub">ΔΔ<i>G</i><sup>‡</sup> = Δ<i>G</i><sup>‡</sup><sub>2</sub> − Δ<i>G</i><sup>‡</sup><sub>1</sub></span></div>
+    <div class="plate"><span class="frac"><span class="num">P1</span><span class="den">P2</span></span> = exp(<span class="frac"><span class="num">+ΔΔ<i>G</i><sup>‡</sup></span><span class="den">R<i>T</i></span></span>) <span class="sub">ΔΔ<i>G</i><sup>‡</sup> = Δ<i>G</i><sup>‡</sup><sub>2</sub> − Δ<i>G</i><sup>‡</sup><sub>1</sub></span></div>
   </div>
 
   <div class="cols">
@@ -315,11 +319,9 @@
       <div class="group">
         <p class="group-label"><span>Barrier difference</span>
           <button class="swap" id="m3-swap" type="button">swap P1 ⇌ P2</button></p>
-        <div class="row">
+        <div class="row one">
           <div class="field"><label for="m3-dgk">ΔΔ<i>G</i><sup>‡</sup></label>
             <div class="inputline"><input id="m3-dgk" inputmode="decimal" autocomplete="off"><span class="unit">kcal/mol</span></div></div>
-          <div class="field"><label for="m3-dgj">ΔΔ<i>G</i><sup>‡</sup></label>
-            <div class="inputline"><input id="m3-dgj" inputmode="decimal" autocomplete="off"><span class="unit">kJ/mol</span></div></div>
         </div>
       </div>
 
@@ -370,7 +372,6 @@
 "use strict";
 const R = 1.987204258640832e-3;      // kcal / mol / K
 const KB = 1.380649e-23, H = 6.62607015e-34;
-const KCAL_KJ = 4.184;
 const LN2 = Math.LN2;
 
 /* ---------------- helpers ---------------- */
@@ -444,14 +445,51 @@ function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;'); }
 function label(x,y,text,opts){
   opts = opts || {};
   return '<text x="'+x+'" y="'+y+'" text-anchor="'+(opts.anchor||'middle')+'" '+
-    'font-family="IBM Plex Mono, monospace" font-size="'+(opts.size||12)+'" '+
+    'font-family="Montserrat, sans-serif" font-size="'+(opts.size||12)+'" '+
     'font-weight="'+(opts.weight||400)+'" fill="'+(opts.fill||'#141B17')+'">'+esc(text)+'</text>';
+}
+/* text with a properly superscripted double dagger — pre‡ᵇ, optionally followed by a
+   trailing suffix back on the baseline (e.g. daggerLabel(x,y,'ΔG',null,' = 23.00',...)) */
+function daggerLabel(x,y,pre,sub,suffix,opts){
+  opts = opts || {};
+  const size = opts.size || 13, weight = opts.weight || 500, fill = opts.fill || '#141B17';
+  const anchor = opts.anchor || 'middle';
+  const smallSize = (size*0.7).toFixed(1);
+  const up = size*0.34, down = size*0.14;
+  let inner = esc(pre) + '<tspan font-size="'+smallSize+'" dy="'+(-up).toFixed(1)+'">‡</tspan>';
+  if(sub){
+    inner += '<tspan font-size="'+smallSize+'" dy="'+(up+down).toFixed(1)+'">'+esc(sub)+'</tspan>';
+    if(suffix) inner += '<tspan font-size="'+size+'" dy="'+(-down).toFixed(1)+'">'+esc(suffix)+'</tspan>';
+  } else if(suffix){
+    inner += '<tspan font-size="'+size+'" dy="'+up.toFixed(1)+'">'+esc(suffix)+'</tspan>';
+  }
+  return '<text x="'+x+'" y="'+y+'" text-anchor="'+anchor+'" font-family="Montserrat, sans-serif" '+
+    'font-size="'+size+'" font-weight="'+weight+'" fill="'+fill+'">'+inner+'</text>';
+}
+/* population/selectivity percentages: never claim exactly 0.0% or 100% */
+function pctLabel(frac){
+  const p = frac*100;
+  if(p <= 0.05) return '<0.1%';
+  if(p >= 99.95) return '>99.9%';
+  return p.toFixed(1)+'%';
+}
+function pctNum(frac){
+  const p = frac*100;
+  if(p <= 0.05) return '<0.1';
+  if(p >= 99.95) return '>99.9';
+  return p.toFixed(1);
+}
+function fmtPct(p){
+  if(!isFinite(p)) return '';
+  if(p <= 0.05) return '<0.1';
+  if(p >= 99.95) return '>99.9';
+  return fmt(p);
 }
 
 /* ================= PANEL 1 ================= */
 const m1 = {dG: 1.5, T: 298.15};
 const m1el = {
-  dgk:$('m1-dgk'), dgj:$('m1-dgj'), tk:$('m1-tk'), tc:$('m1-tc'),
+  dgk:$('m1-dgk'), tk:$('m1-tk'), tc:$('m1-tc'),
   keq:$('m1-keq'), pa:$('m1-pa'), pb:$('m1-pb'),
   ratio:$('m1-ratio'), which:$('m1-which'), flag:$('m1-flag')
 };
@@ -462,12 +500,11 @@ function m1Render(skip){
   const K = Math.exp(-x);
   const fB = 1/(1+Math.exp(x)), fA = 1/(1+Math.exp(-x));
   set(m1el.dgk, fmt(m1.dG), skip);
-  set(m1el.dgj, fmt(m1.dG*KCAL_KJ), skip);
   set(m1el.tk, fmt(m1.T), skip);
   set(m1el.tc, fmt(m1.T-273.15), skip);
   set(m1el.keq, fmt(K), skip);
-  set(m1el.pa, fmt(fA*100), skip);
-  set(m1el.pb, fmt(fB*100), skip);
+  set(m1el.pa, fmtPct(fA*100), skip);
+  set(m1el.pb, fmtPct(fB*100), skip);
 
   const big = fA >= fB ? fA : fB;
   const small = 1 - big;
@@ -502,8 +539,8 @@ function drawFig1(fA,fB){
 
   // liquid
   const lvlA = yOf(eA)-fA*maxFill, lvlB = yOf(eB)-fB*maxFill;
-  s += '<g clip-path="url(#c1a)"><rect class="liquid" x="30" y="'+lvlA.toFixed(1)+'" width="200" height="'+(yOf(eA)-lvlA+30).toFixed(1)+'" fill="#1B5F5A" opacity="0.82"/></g>';
-  s += '<g clip-path="url(#c1b)"><rect class="liquid" x="230" y="'+lvlB.toFixed(1)+'" width="200" height="'+(yOf(eB)-lvlB+30).toFixed(1)+'" fill="#7B2E5E" opacity="0.82"/></g>';
+  s += '<g clip-path="url(#c1a)"><rect class="liquid" x="30" y="'+lvlA.toFixed(1)+'" width="200" height="'+(yOf(eA)-lvlA+30).toFixed(1)+'" fill="#18453B" opacity="0.82"/></g>';
+  s += '<g clip-path="url(#c1b)"><rect class="liquid" x="230" y="'+lvlB.toFixed(1)+'" width="200" height="'+(yOf(eB)-lvlB+30).toFixed(1)+'" fill="#004583" opacity="0.82"/></g>';
 
   // curve: solid over the wells, dashed over the hump
   s += '<path class="movepath" d="'+pathFor(nodes,yOf,30,175)+'" fill="none" stroke="#141B17" stroke-width="2.4"/>';
@@ -515,23 +552,22 @@ function drawFig1(fA,fB){
   if(Math.abs(yA-yB) > 3){
     s += '<line x1="110" y1="'+yA.toFixed(1)+'" x2="405" y2="'+yA.toFixed(1)+'" stroke="#141B17" stroke-width="1" stroke-dasharray="3 3" opacity=".45"/>';
     s += '<line x1="350" y1="'+yB.toFixed(1)+'" x2="405" y2="'+yB.toFixed(1)+'" stroke="#141B17" stroke-width="1" stroke-dasharray="3 3" opacity=".45"/>';
-    s += '<line x1="398" y1="'+yA.toFixed(1)+'" x2="398" y2="'+yB.toFixed(1)+'" stroke="#A9761C" stroke-width="1.6"/>';
+    s += '<line x1="398" y1="'+yA.toFixed(1)+'" x2="398" y2="'+yB.toFixed(1)+'" stroke="#0B9A6D" stroke-width="1.6"/>';
     const mid = (yA+yB)/2;
-    s += label(392, mid+4, (m1.dG>0?'+':'')+m1.dG.toFixed(2), {anchor:'end', size:12.5, fill:'#A9761C', weight:500});
+    s += label(392, mid+4, 'ΔG° = '+(m1.dG>0?'+':'')+m1.dG.toFixed(2), {anchor:'end', size:12.5, fill:'#0B9A6D', weight:500});
   }
 
-  s += label(110, H-22, 'A', {size:16, weight:600, fill:'#1B5F5A'});
-  s += label(350, H-22, 'B', {size:16, weight:600, fill:'#7B2E5E'});
-  s += label(110, yOf(eA)-fA*maxFill-8, (fA*100).toFixed(1)+'%', {size:13.5, weight:500, fill:'#1B5F5A'});
-  s += label(350, yOf(eB)-fB*maxFill-8, (fB*100).toFixed(1)+'%', {size:13.5, weight:500, fill:'#7B2E5E'});
-  s += label(30, H-22, 'reaction coordinate →', {anchor:'start', size:11.5, fill:'#6E756B'});
+  s += label(110, H-22, 'A', {size:16, weight:600, fill:'#18453B'});
+  s += label(350, H-22, 'B', {size:16, weight:600, fill:'#004583'});
+  s += label(110, yOf(eA)-fA*maxFill-8, pctLabel(fA), {size:13.5, weight:500, fill:'#18453B'});
+  s += label(350, yOf(eB)-fB*maxFill-8, pctLabel(fB), {size:13.5, weight:500, fill:'#004583'});
+  s += label(30, H-6, 'reaction coordinate →', {anchor:'start', size:11.5, fill:'#6E756B'});
   $('fig1').innerHTML = s;
 }
 
 function m1Bind(){
   function on(el, fn){ el.addEventListener('input', function(){ const v = num(el); if(v===null) return; fn(v); m1Render(el); }); }
   on(m1el.dgk, v => { m1.dG = v; m1el.flag.classList.remove('on'); });
-  on(m1el.dgj, v => { m1.dG = v/KCAL_KJ; m1el.flag.classList.remove('on'); });
   on(m1el.tk, v => { if(v >= 1) m1.T = v; });
   on(m1el.tc, v => { if(v > -272.15) m1.T = v+273.15; });
   on(m1el.keq, v => { if(v > 0) m1.dG = -R*m1.T*Math.log(v); });
@@ -554,7 +590,7 @@ function m1FromPct(fB){
 /* ================= PANEL 2 ================= */
 const m2 = {dG: 23, T: 298.15};
 const m2el = {
-  dgk:$('m2-dgk'), dgj:$('m2-dgj'), tk:$('m2-tk'), tc:$('m2-tc'),
+  dgk:$('m2-dgk'), tk:$('m2-tk'), tc:$('m2-tc'),
   k:$('m2-k'), t12:$('m2-t12'), unit:$('m2-unit'), plain:$('m2-plain'), c99:$('m2-99')
 };
 let unitSticky = false;
@@ -585,7 +621,6 @@ function m2Render(skip){
   const k = rateOf(m2.dG, m2.T);
   const t = LN2/k;
   set(m2el.dgk, fmt(m2.dG), skip);
-  set(m2el.dgj, fmt(m2.dG*KCAL_KJ), skip);
   set(m2el.tk, fmt(m2.T), skip);
   set(m2el.tc, fmt(m2.T-273.15), skip);
   set(m2el.k, fmt(k), skip);
@@ -636,18 +671,17 @@ function drawFig2(){
   const y0 = yOf(0), yT = yOf(dgV);
   s += '<line x1="105" y1="'+y0.toFixed(1)+'" x2="250" y2="'+y0.toFixed(1)+'" stroke="#141B17" stroke-width="1" stroke-dasharray="3 3" opacity=".45"/>';
   s += '<line x1="235" y1="'+yT.toFixed(1)+'" x2="250" y2="'+yT.toFixed(1)+'" stroke="#141B17" stroke-width="1" stroke-dasharray="3 3" opacity=".45"/>';
-  s += '<line x1="246" y1="'+y0.toFixed(1)+'" x2="246" y2="'+yT.toFixed(1)+'" stroke="#A9761C" stroke-width="1.8"/>';
-  s += label(256, (y0+yT)/2+4, 'ΔG‡ = '+m2.dG.toFixed(2), {anchor:'start', size:12.5, fill:'#A9761C', weight:500});
-  s += label(235, yT-10, '‡', {size:16, weight:500, fill:'#141B17'});
-  s += label(105, y0+20, 'A', {size:16, weight:600, fill:'#1B5F5A'});
-  s += label(378, yOf(drop)+20, 'B', {size:16, weight:600, fill:'#7B2E5E'});
+  s += '<line x1="246" y1="'+y0.toFixed(1)+'" x2="246" y2="'+yT.toFixed(1)+'" stroke="#0B9A6D" stroke-width="1.8"/>';
+  s += daggerLabel(256, (y0+yT)/2+4, 'ΔG', null, ' = '+m2.dG.toFixed(2), {anchor:'start', size:12.5, fill:'#0B9A6D', weight:500});
+  s += daggerLabel(235, yT-6, '', null, null, {size:14, weight:500, fill:'#141B17'});
+  s += label(105, y0+20, 'A', {size:16, weight:600, fill:'#18453B'});
+  s += label(378, yOf(drop)+20, 'B', {size:16, weight:600, fill:'#004583'});
   s += label(30, H-22, 'reaction coordinate →', {anchor:'start', size:11.5, fill:'#6E756B'});
   $('fig2').innerHTML = s;
 }
 function m2Bind(){
   function on(el, fn){ el.addEventListener('input', function(){ const v = num(el); if(v===null) return; fn(v); m2Render(el); }); }
   on(m2el.dgk, v => { m2.dG = v; });
-  on(m2el.dgj, v => { m2.dG = v/KCAL_KJ; });
   on(m2el.tk, v => { if(v >= 1) m2.T = v; });
   on(m2el.tc, v => { if(v > -272.15) m2.T = v+273.15; });
   on(m2el.k, v => { if(v > 0) m2.dG = R*m2.T*Math.log(KB*m2.T/(H*v)); });
@@ -659,7 +693,7 @@ function m2Bind(){
 /* ================= PANEL 3 ================= */
 const m3 = {ddG: 2.0, T: 298.15};
 const m3el = {
-  dgk:$('m3-dgk'), dgj:$('m3-dgj'), tk:$('m3-tk'), tc:$('m3-tc'),
+  dgk:$('m3-dgk'), tk:$('m3-tk'), tc:$('m3-tc'),
   krel:$('m3-krel'), p1:$('m3-p1'), p2:$('m3-p2'),
   ratio:$('m3-ratio'), alt:$('m3-alt'), flag:$('m3-flag')
 };
@@ -668,14 +702,13 @@ function m3Render(skip){
   const krel = Math.exp(x);
   const f1 = 1/(1+Math.exp(-x)), f2 = 1/(1+Math.exp(x));
   set(m3el.dgk, fmt(m3.ddG), skip);
-  set(m3el.dgj, fmt(m3.ddG*KCAL_KJ), skip);
   set(m3el.tk, fmt(m3.T), skip);
   set(m3el.tc, fmt(m3.T-273.15), skip);
   set(m3el.krel, fmt(krel), skip);
-  set(m3el.p1, fmt(f1*100), skip);
-  set(m3el.p2, fmt(f2*100), skip);
+  set(m3el.p1, fmtPct(f1*100), skip);
+  set(m3el.p2, fmtPct(f2*100), skip);
   m3el.ratio.textContent = (f1>=f2 ? sci(f1/f2,3)+' : 1' : '1 : '+sci(f2/f1,3));
-  m3el.alt.textContent = (f1*100).toFixed(1)+' : '+(f2*100).toFixed(1)+'   ·   '+(Math.abs(f1-f2)*100).toFixed(1)+'% excess';
+  m3el.alt.textContent = pctNum(f1)+' : '+pctNum(f2)+'   ·   '+pctNum(Math.abs(f1-f2))+'% excess';
   drawFig3(f1,f2);
 }
 function drawFig3(f1,f2){
@@ -699,8 +732,8 @@ function drawFig3(f1,f2){
   s += '</defs>';
   const maxFill = Math.max(10, (yOf(drop)-yOf(Math.min(e1,e2))) - 12);
   const lv1 = yOf(drop)-f1*maxFill, lv2 = yOf(drop)-f2*maxFill;
-  s += '<g clip-path="url(#c3a)"><rect class="liquid" x="26" y="'+lv1.toFixed(1)+'" width="124" height="'+(yOf(drop)-lv1+30).toFixed(1)+'" fill="#1B5F5A" opacity="0.82"/></g>';
-  s += '<g clip-path="url(#c3b)"><rect class="liquid" x="310" y="'+lv2.toFixed(1)+'" width="124" height="'+(yOf(drop)-lv2+30).toFixed(1)+'" fill="#7B2E5E" opacity="0.82"/></g>';
+  s += '<g clip-path="url(#c3a)"><rect class="liquid" x="26" y="'+lv1.toFixed(1)+'" width="124" height="'+(yOf(drop)-lv1+30).toFixed(1)+'" fill="#18453B" opacity="0.82"/></g>';
+  s += '<g clip-path="url(#c3b)"><rect class="liquid" x="310" y="'+lv2.toFixed(1)+'" width="124" height="'+(yOf(drop)-lv2+30).toFixed(1)+'" fill="#004583" opacity="0.82"/></g>';
   s += '<path class="movepath" d="'+pathFor(nodes,yOf,26,434)+'" fill="none" stroke="#141B17" stroke-width="2.4"/>';
 
   // ΔΔG‡ measure between the two TS tops
@@ -709,16 +742,16 @@ function drawFig3(f1,f2){
     const lo = Math.max(yT1,yT2), hi = Math.min(yT1,yT2);
     s += '<line x1="150" y1="'+yT1.toFixed(1)+'" x2="310" y2="'+yT1.toFixed(1)+'" stroke="#141B17" stroke-width="1" stroke-dasharray="3 3" opacity=".4"/>';
     s += '<line x1="150" y1="'+yT2.toFixed(1)+'" x2="310" y2="'+yT2.toFixed(1)+'" stroke="#141B17" stroke-width="1" stroke-dasharray="3 3" opacity=".4"/>';
-    s += '<line x1="230" y1="'+lo.toFixed(1)+'" x2="230" y2="'+hi.toFixed(1)+'" stroke="#A9761C" stroke-width="1.8"/>';
-    s += label(238, (lo+hi)/2+4, 'ΔΔG‡ = '+Math.abs(m3.ddG).toFixed(2), {anchor:'start', size:12.5, fill:'#A9761C', weight:500});
+    s += '<line x1="230" y1="'+lo.toFixed(1)+'" x2="230" y2="'+hi.toFixed(1)+'" stroke="#0B9A6D" stroke-width="1.8"/>';
+    s += daggerLabel(238, (lo+hi)/2+4, 'ΔΔG', null, ' = '+Math.abs(m3.ddG).toFixed(2), {anchor:'start', size:12.5, fill:'#0B9A6D', weight:500});
   }
-  s += label(150, yT1-9, '‡₁', {size:13, weight:500});
-  s += label(310, yT2-9, '‡₂', {size:13, weight:500});
+  s += daggerLabel(150, yT1-9, '', '1', null, {size:15, weight:500});
+  s += daggerLabel(310, yT2-9, '', '2', null, {size:15, weight:500});
   s += label(230, yOf(0)+18, 'shared intermediate', {size:11, fill:'#6E756B'});
-  s += label(58, H-22, 'P1', {size:16, weight:600, fill:'#1B5F5A'});
-  s += label(404, H-22, 'P2', {size:16, weight:600, fill:'#7B2E5E'});
-  s += label(58, lv1-8, (f1*100).toFixed(1)+'%', {size:13.5, weight:500, fill:'#1B5F5A'});
-  s += label(404, lv2-8, (f2*100).toFixed(1)+'%', {size:13.5, weight:500, fill:'#7B2E5E'});
+  s += label(58, H-22, 'P1', {size:16, weight:600, fill:'#18453B'});
+  s += label(404, H-22, 'P2', {size:16, weight:600, fill:'#004583'});
+  s += label(58, lv1-8, pctLabel(f1), {size:13.5, weight:500, fill:'#18453B'});
+  s += label(404, lv2-8, pctLabel(f2), {size:13.5, weight:500, fill:'#004583'});
   $('fig3').innerHTML = s;
 }
 function m3FromPct(f1){
@@ -734,7 +767,6 @@ function m3FromPct(f1){
 function m3Bind(){
   function on(el, fn){ el.addEventListener('input', function(){ const v = num(el); if(v===null) return; fn(v); m3Render(el); }); }
   on(m3el.dgk, v => { m3.ddG = v; m3el.flag.classList.remove('on'); });
-  on(m3el.dgj, v => { m3.ddG = v/KCAL_KJ; m3el.flag.classList.remove('on'); });
   on(m3el.tk, v => { if(v >= 1) m3.T = v; });
   on(m3el.tc, v => { if(v > -272.15) m3.T = v+273.15; });
   on(m3el.krel, v => { if(v > 0) m3.ddG = R*m3.T*Math.log(v); });
