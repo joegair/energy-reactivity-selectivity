@@ -553,9 +553,24 @@ function drawFig1(fA,fB){
     s += '<line x1="110" y1="'+yA.toFixed(1)+'" x2="405" y2="'+yA.toFixed(1)+'" stroke="#141B17" stroke-width="1" stroke-dasharray="3 3" opacity=".45"/>';
     s += '<line x1="350" y1="'+yB.toFixed(1)+'" x2="405" y2="'+yB.toFixed(1)+'" stroke="#141B17" stroke-width="1" stroke-dasharray="3 3" opacity=".45"/>';
     s += '<line x1="398" y1="'+yA.toFixed(1)+'" x2="398" y2="'+yB.toFixed(1)+'" stroke="#0B9A6D" stroke-width="1.6"/>';
-    const mid = (yA+yB)/2, dgLabelY = mid+4;
-    const dgOnLiquid = dgLabelY >= lvlB && dgLabelY <= yB;
-    s += label(392, dgLabelY, 'ΔG° = '+(m1.dG>0?'+':'')+m1.dG.toFixed(2), {anchor:'end', size:12.5, fill:(dgOnLiquid?'#FFFFFF':'#141B17'), weight:500});
+    // when the two wells are close in height, centering the label on the bracket would sit it
+    // right on top of the guide lines/curve — and a fixed offset from the bracket isn't safe
+    // either, since the favoured well's liquid (and its own % label) can float arbitrarily high
+    // and land on the same spot. Check directly against B's % label position; if the midpoint
+    // placement would be too small a gap either way, park the label above the hump instead,
+    // where nothing else is ever drawn.
+    const gap = Math.abs(yA-yB);
+    const midYCandidate = (yA+yB)/2+4, pctBY = lvlB-8;
+    let dgLabelX = 392, dgLabelAnchor = 'end', dgLabelY, dgOnLiquid;
+    if(gap >= 26 && Math.abs(midYCandidate-pctBY) >= 22){
+      dgLabelY = midYCandidate;
+      dgOnLiquid = dgLabelY >= lvlB && dgLabelY <= yB;
+    } else {
+      dgLabelX = 230; dgLabelAnchor = 'middle';
+      dgLabelY = yOf(eTS) - 14;
+      dgOnLiquid = false;
+    }
+    s += label(dgLabelX, dgLabelY, 'ΔG° = '+(m1.dG>0?'+':'')+m1.dG.toFixed(2), {anchor:dgLabelAnchor, size:12.5, fill:(dgOnLiquid?'#FFFFFF':'#141B17'), weight:500});
   }
 
   s += label(110, H-22, 'A', {size:16, weight:600, fill:'#18453B'});
